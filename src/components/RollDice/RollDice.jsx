@@ -6,8 +6,8 @@ export default class RollDice extends Component {
     constructor() {
         super();
         this.state = {
-            dice1: 'four',
-            dice2: 'five',
+            dice1: 'six',
+            dice2: 'six',
             rolling: false
         }
         this.roll = this.roll.bind(this);
@@ -18,6 +18,7 @@ export default class RollDice extends Component {
         let randNum1 = Math.floor(Math.random() * 6);
         let randNum2 = Math.floor(Math.random() * 6);
         this.setState({ dice1: values[randNum1], dice2: values[randNum2], rolling: true });
+        setTimeout(() => { this.setState({ rolling: false }); }, 1000)
     }
 
 
@@ -25,10 +26,10 @@ export default class RollDice extends Component {
         return (
             <div className='RollDice'>
                 <div className='RollDice-dice'>
-                    <Die value={this.state.dice1} />
-                    <Die value={this.state.dice2} />
+                    <Die value={this.state.dice1} rolling={this.state.rolling} />
+                    <Die value={this.state.dice2} rolling={this.state.rolling} />
                 </div>
-                <button onClick={this.roll} >{this.state.rolling ? 'Rolling..' : 'Roll dice'}</button>
+                <button onClick={this.roll} disabled={this.state.rolling} >{this.state.rolling ? 'Rolling..' : 'Roll dice'}</button>
             </div>
         )
     }
